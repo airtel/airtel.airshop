@@ -165,20 +165,7 @@ class Muonline extends MX_Controller {
          */
         if($this->input->post('submit'))
         {
-            if($this->input->post('smscode') && $this->input->post('smscode') != '99999999')
-            {
-                $pay_method = 'sms';
-            }
-            elseif($this->input->post('ibankcode') && $this->input->post('ibankcode') != '99999999')
-            {
-                $pay_method = 'ibank';
-            }
-            elseif($this->input->post('paypalcode') && $this->input->post('paypalcode') != '99999999')
-            {
-                $pay_method = 'paypal';
-            }
-            
-            
+            $pay_method = $this->validation->get_paymethod();
             $pay_code = $this->input->post($pay_method.'code');
             $post_price = $this->input->post('prices_'.$pay_method);
             

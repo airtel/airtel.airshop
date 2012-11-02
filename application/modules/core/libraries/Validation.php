@@ -20,6 +20,7 @@ class Validation
     function validation_parser($fields = array(), $pay_method = NULL)
     {
         $pay_fields = $this->CI->config->item('fields_'.$pay_method);
+        
         /**
          * Service specific fields
          */
@@ -31,7 +32,6 @@ class Validation
             }
         }
         
-        
         /**
          * Payment method mandatory fields from config
          */
@@ -42,6 +42,22 @@ class Validation
         
         
         return ($this->CI->form_validation->run() == FALSE) ? FALSE : TRUE;
+    }
+    
+    
+    /**
+     * Finds payment method
+     * @return type
+     */
+    public function get_paymethod()
+    {
+        foreach($this->CI->module->pay_methods as $pay_method)
+        {
+            if($this->CI->input->post($pay_method.'code') && $this->CI->input->post($pay_method.'code') != '99999999')
+            {
+                return $pay_method;
+            }
+        }
     }
     
     
