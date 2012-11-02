@@ -1,0 +1,307 @@
+body {
+    font-size: 12px;
+    background-color: #34373b;
+}
+
+/* Preload fix */
+.js .module-wrapper {
+    display: none;
+}
+
+/* Basic container */
+.container {
+    width: 782px;
+}
+
+/* Basic wrapper that holds all shop */
+.wrapper {
+    padding: 1px;
+    background-color: #FFF;
+    border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -ms-border-radius: 8px 8px 8px 8px;
+    min-height: 672px;
+}
+
+/* Shop header */
+#header {
+    height: 42px;
+    font-weight: 100;
+    line-height: 42px;
+    text-indent: 24px;
+    color: #FFF;
+    font-family: 'PT Sans';
+    font-size: 18px;    
+}
+
+#header .small {
+    font-size: 11px;
+}
+
+/* Module content wrapper */
+.module-wrapper {
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+/* Preloading */
+.js #loading_layer {
+    visibility: visible;
+    display:block !important;
+}
+
+.js #loading_layer img {
+    position: relative;
+    top: 220px;
+    left: 200px;
+    width:64px;
+    height:10px;
+}
+
+/* Bootstrap override */
+.well {
+    box-shadow: none;
+}
+
+.heading {
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 18px;
+    padding-bottom: 3px
+}
+
+.heading h1, .heading h2, .heading h3, .heading h4, h1.heading, h2.heading, h3.heading, h4.heading, .modal-header h3
+{
+    font-family: 'PT Sans',sans-serif;
+    font-weight: 400
+}
+
+label, input, button, select, textarea, .btn
+{
+    font-size: 12px;
+}
+
+.form-horizontal .form-actions 
+{
+    /*padding: 10px 39px 0px 39px;*/
+    padding: 10px 0px 0px 290px;
+}
+
+.well {
+    padding-bottom: 5px;
+}
+
+.form-horizontal .input-label {
+    color: #333333;
+    display: block;
+    float: left;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 4px;
+    text-align: left;
+    width: 140px;
+}
+
+
+/* Form errors */
+.f_legend {
+    border-bottom: 1px solid #DCDCDC;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+}
+
+.f_error input, .f_error select, .f_error .chzn-container-single .chzn-single {
+    color: #b94a48;
+    border-color: #b94a48
+}
+
+
+
+
+
+.f_error input:focus, .f_error select:focus {
+    -webkit-box-shadow: 0 0 6px #d59392;
+    -moz-box-shadow: 0 0 6px #d59392;
+    box-shadow: 0 0 6px #d59392;
+    border-color: #953b39
+}
+
+.f_error .input-prepend .add-on, .f_error .input-append .add-on {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #b94a48;
+}
+.f_error label.error {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #C62626;
+}
+
+input[type="text"] + label.error, input[type="password"] + label.error, select + label.error, textarea + label.error {
+    margin-top: -6px;
+}
+
+.f_error label.radio + label.error, .f_error label.checkbox + label.error {
+    margin-top: 5px;
+}
+
+.input-prepend.f_error label.error,.input_append.f_error  label.error {
+    margin-top: 4px;
+}
+
+.control-group.f_error label.error {
+    margin-top: 2px;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    font-size: 12px;
+}
+
+/* Tabs */
+.tabbable-bordered { 
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;border-radius:4px;
+}
+
+.tabbable-bordered > .nav-tabs {
+    margin: 0;
+}
+
+.tabbable-bordered .tab-content {
+    border-color: #ddd;
+    border-style: solid;
+    border-width: 0;
+    overflow: auto;
+    padding: 18px 0 0;
+}
+
+.tabbable-bordered > .tab-content {
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    border-width: 0 1px 1px;
+    padding: 20px 20px 10px !important;
+}
+
+.tab-content {
+    background-color: #fff;
+}
+
+
+/* Payment styles */
+.payment {
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-top: -5px;
+    position: relative;
+    vertical-align: text-top;
+    width: 24px;
+    padding-right: 3px;
+}
+
+.sms {
+    background-image: url("../img/payments/sms_24x24.png");
+}
+
+.ibank {
+    background-image: url("../img/payments/ibank_24x24.png");
+}
+
+.paypal {
+    background-image: url("../img/payments/paypal_24x24.png");
+}
+
+input, textarea, .uneditable-input {
+    width: 220px;
+}
+
+
+/* Pagination */
+.pagination {
+    height: 26px;
+    margin: 0px;
+}
+
+.pagination a.active {
+    background-color: #f5f5f5
+}
+
+.pagination a.active {
+    color: #999;
+    cursor: default;
+}
+
+.pagination a {
+    line-height: 24px;
+    padding:0 10px;
+}
+
+.pagination ul li > div.page {
+    display: inline;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+    line-height: 24px;
+}
+
+.searchbar {
+    padding-bottom: 3px;
+}
+
+
+/* Datatables style override */
+.datatable_a, .datatable_b {
+    /*width: 510px;*/
+}
+
+.column6 {
+    width: 60px;
+}
+.column7 {
+    width: 70px;
+}
+.column8 {
+    width: 80px;
+}
+.column9 {
+    width: 90px;
+}
+.column10 {
+    width: 100px;
+}
+.column11 {
+    width: 110px;
+}
+
+/* Baner holder */
+.banner_holder {
+    display: block;
+    float: right;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    line-height: 20px;
+    padding-right: 3px;
+}
+
+.banner_holder a {
+    opacity: 0.4;
+}
+
+.banner_holder a:hover {
+    opacity: 1.0;
+}
+
+.image-holder {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* Chosen overflow fix */
+.tab-content {
+    min-height: 250px;
+}

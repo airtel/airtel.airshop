@@ -1,0 +1,33 @@
+/* Shop header */
+#header {
+   background: #94252E;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+   
+    border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    -ms-border-radius: 8px 8px 0 0;
+}
+
+/* Active service selection */
+.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover, .nav-list > .active > a, .nav-list > .active > a:hover {
+    background: #94252E !important;
+}
+
+/* Stepy titles current step */
+.stepy-titles .current-step .stepNb {
+    background: #067EAD;
+}
+.stepy-titles .current-step {
+    color: #067EAD;
+}
+
+/* Stepy titles warned step */
+.error-image .stepNb {
+    background: #94252E !important;
+}
+
+/* Stepy titles inactive step */
+.stepy-titles .stepNb {
+    background: #EFEFEF;
+}

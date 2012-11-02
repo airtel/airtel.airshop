@@ -1,0 +1,7 @@
+/* error pages */
+.error_page {background:#eee}
+.error_page,.error_page body,.error_page .error_box {height:100%}
+.error_page h1 {font-family: 'Jockey One', sans-serif;font-size: 52px;line-height:1.1;text-transform: uppercase;color: #067ead;text-shadow: 2px 2px 0px rgba(255,255,255,.5), 4px 4px 0px rgba(0,0,0,.1);margin-bottom:10px;padding:40px 0 0 300px}
+.error_page p {color:inherit;font-size:16px;line-height:24px;font-weight:200;margin-left:300px}
+.error_page .back_link {margin-left:300px}
+.error_page .error_box {background: url(../img/error_big.png) no-repeat 0 0;padding:0;width:72%;margin: 0 auto}

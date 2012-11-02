@@ -1,0 +1,85 @@
+.accordion-toggle {
+    -webkit-transition: background-color 0.2s ease-in-out;  
+    -moz-transition: background-color 0.2s ease-in-out;  
+    -o-transition: background-color 0.2s ease-in-out;  
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar {
+    min-height: 100%;
+    
+    background: url("../img/main_bg.gif");
+    background-repeat: repeat-y;
+    
+    -webkit-border-bottom-left-radius: 8px;
+    -moz-border-radius-bottomleft: 8px;
+    border-bottom-left-radius: 8px;    
+}
+
+.sidebar .accordion {
+/*    border-right: 1px solid #ccc;
+    background: #f1f1f1;*/
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px !important;
+    margin-right: 21px;
+}
+
+.sidebar .accordion-heading {
+    text-shadow: 1px 1px 0 #efefef;
+    background: #e0e0e0;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ececec;
+    box-shadow: inset 0px 1px 0px 0px #ececec;
+}
+
+.sidebar .accordion-heading a:hover {
+    background-color: #cfcfcf;
+}
+
+.sidebar .accordion-group {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 0 0 1px;
+}
+
+.sidebar .accordion-group a {
+    color: #222;
+    text-decoration: none !important;
+}
+
+.sidebar .accordion-group .active a {
+    color:#fff;
+}
+
+.sidebar .accordion-group .accordion-heading a {
+    color:#222;
+}
+
+.sidebar .accordion-inner {
+    border-top: 1px solid #ccc;
+    background: #fafafa;
+}
+
+.sdb_h_active a {
+    background: url("../img/bullet_green.png") no-repeat 98% center;
+}
+
+.nav-list > li > a,.dropdown-menu li a {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px
+}
+
+.accordion-inner .nav-list {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+li.top-li
+{
+    padding-left: 10px;
+}
