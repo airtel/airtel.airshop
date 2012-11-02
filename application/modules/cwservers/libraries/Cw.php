@@ -42,7 +42,7 @@ class Cw
     }
     
     
-    public function ping_host($settings = [], $throw_errors = FALSE)
+    public function ping_host($settings = array(), $throw_errors = FALSE)
     {
         if( ! $socket = @fsockopen($settings['hostname'], $settings['port'], $errno, $errstr, 1))
         {
