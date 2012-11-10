@@ -21,26 +21,12 @@ class War extends MX_Controller {
     public function __construct()        
     {
         parent::__construct();
-
-        // Base modules
-        $this->load->module('base');
-        $this->load->module('smscode');
-        $this->load->module('ibankcode');
-        $this->load->module('paypalcode');
         
         // Init library
         $this->load->library('core/module');
         
-        // Core libraries
-        $this->load->library('core/error_handler');
-        $this->load->library('core/ui');
-        $this->load->library('core/system');
-        
-        // Module sql model loading
-        $this->load->model($this->module->active_module.'/'.$this->module->active_module.'_model');
-        
-        // Core model loading
-        $this->load->model('core/core_model');
+        // Init db models
+        $this->module->db_init();
         
         // Module specific variables and functions initialization and execution
         $this->module->module_init();

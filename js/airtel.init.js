@@ -86,7 +86,7 @@ airtel_sidebar = {
         }
     }
 
-}
+};
 
 
 /**
@@ -152,7 +152,7 @@ airtel_misc = {
         }        
     }
     
-}
+};
 
 
 /**
@@ -240,4 +240,4 @@ airtel_payments = {
         setTimeout('airtel_payments.paypal_check_status()', 500);
     }
 
-}
+};

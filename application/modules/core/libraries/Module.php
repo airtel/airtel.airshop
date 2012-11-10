@@ -27,8 +27,15 @@ class Module
     
     public function __construct()
     {
+        // Get superclass pointer
         $this->CI =& get_instance();
         
+        // Load Base modules
+        $this->CI->load->module('base');
+        $this->CI->load->module('smscode');
+        $this->CI->load->module('ibankcode');
+        $this->CI->load->module('paypalcode');
+
         // Debug
         //$this->CI->output->enable_profiler(TRUE);
         
@@ -59,8 +66,26 @@ class Module
         
         // Get loaded modules
         $this->loaded_modules = $this->CI->config->item('base_modules');
+        
+        // Load core libraries
+        $this->CI->load->library('core/error_handler');
+        $this->CI->load->library('core/ui');
+        $this->CI->load->library('core/system');
     }
 
+    
+    /**
+     * Loads module database and core database models
+     */
+    public function db_init()
+    {
+        // Module sql model loading
+        $this->CI->load->model($this->active_module.'/'.$this->active_module.'_model');
+        
+        // Core model loading
+        $this->CI->load->model('core/core_model');
+    }
+    
     
     /**
      * Initialization activities of module
@@ -82,6 +107,9 @@ class Module
     }
     
     
+    /**
+     * 
+     */
     private function security_layer()
     {
         // Access check to modules
@@ -104,6 +132,6 @@ class Module
             }
         }
     }
-    
+
     
 }
