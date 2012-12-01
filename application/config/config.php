@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://test.airtel.lv/newshop/';
+$config['base_url']	= 'http://systest.airtel.lv/airshop/';
 
 /*
 |--------------------------------------------------------------------------
