@@ -25,14 +25,17 @@ class Wow extends MX_Controller {
         // Init library
         $this->load->library('core/module');
 
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();

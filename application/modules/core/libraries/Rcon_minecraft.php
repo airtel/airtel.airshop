@@ -259,7 +259,7 @@ class Rcon_minecraft {
             }
             
             
-            if(PHP_VERSION_ID >= 50400)
+            if(defined('PHP_VERSION_ID') && PHP_VERSION_ID >= 50400)
             {
                 return ($convert) ? htmlspecialchars(htmlentities($data['String'], ENT_IGNORE), ENT_IGNORE) : $data['String'];
             }

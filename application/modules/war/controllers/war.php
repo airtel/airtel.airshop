@@ -25,14 +25,17 @@ class War extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -78,25 +81,30 @@ class War extends MX_Controller {
         // Load prices
         $this->priceplan_init();
         
-        // Get fields for module active service
-        if(substr($this->module->active_service, 0, 3) == 'exp')
+        $data = array();
+        
+        if($this->uri->segment(4) != 'error')
         {
-            $data['fields'] = $this->config->item('fields_exp');
-            
-            $races = $this->war_model->get_server_races($this->module->services[$this->module->active_service]['db_array_name']);
-            
-            if(count($races) > 0)
+            // Get fields for module active service
+            if(substr($this->module->active_service, 0, 3) == 'exp')
             {
-                foreach($races as $race)
+                $data['fields'] = $this->config->item('fields_exp');
+
+                $races = $this->war_model->get_server_races($this->module->services[$this->module->active_service]['db_array_name']);
+
+                if(count($races) > 0)
                 {
-                    $data['fields']['races']['data'][$race->race_id] = $race->race_name;
+                    foreach($races as $race)
+                    {
+                        $data['fields']['races']['data'][$race->race_id] = $race->race_name;
+                    }
                 }
+
             }
-            
-        }
-        else
-        {
-            $data['fields'] = $this->config->item('fields_'.$this->module->active_service);
+            else
+            {
+                $data['fields'] = $this->config->item('fields_'.$this->module->active_service);
+            }
         }
         
         

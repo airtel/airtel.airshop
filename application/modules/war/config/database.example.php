@@ -1,6 +1,6 @@
 <?php
 /**
- * Minecraft database.php konfigurācijas fails.
+ * War3 database.php konfigurācijas fails.
  */
 
 if (!defined('BASEPATH'))

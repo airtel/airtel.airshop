@@ -58,7 +58,9 @@ class Sourcemod_lib
         $rcon_command = $this->CI->config->item('reload_command');
         $response = $this->CI->rcon_srcds->rcon($rcon_command);
 
-        log_message('debug', 'Module: sourcemod; Function: reloadadmins; action: reloadadmins; Response: '.$response[0]);
+        $resp = (isset($response[0])) ? $response[0] : '';
+        
+        log_message('debug', 'Module: sourcemod; Function: reloadadmins; action: reloadadmins; Response: '.$resp);
         
         return $response;
     }

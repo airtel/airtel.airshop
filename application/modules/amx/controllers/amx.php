@@ -33,14 +33,17 @@ class Amx extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -67,22 +70,19 @@ class Amx extends MX_Controller {
     {
         // Load amx library
         $this->load->library('amx/amx_lib');
-        
-        // Check login
-        //$this->ipb_lib->check_login();
-        
+
         // Services table checking and setup
         $this->core_model->check_table($this->amx_model->sql_services_table, $this->amx_model->table_structure, TRUE);
-        
+
         // Clear expired players data
         $this->amx_model->clear_expired($this->amx_model->sql_services_table);
-        
+
         // Set hlds servers for module
         if($this->uri->segment(2) == 'index' && $this->module->active_service != 'unban')
         {
             $this->servers = $this->amx_model->get_servers($this->module->services[$this->module->active_service]['exclude_servers']);
         }
-        
+
         $this->settings = $this->config->item('services_settings');
     }
     
@@ -242,7 +242,7 @@ class Amx extends MX_Controller {
                     }
                     
                     // Reload privelegies
-                    if($this->config->item('reload_privelegies'))
+                    if($this->config->item('reload_privelegies') && $this->settings[$this->module->active_service]['type'] == 'subscription')
                     {
                         $server = $this->amx_model->get_server($server_id);
                         $this->amx_lib->reloadadmins($server->address, $server->rcon);

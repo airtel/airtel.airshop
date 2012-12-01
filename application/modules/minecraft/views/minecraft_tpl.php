@@ -24,58 +24,51 @@
     
     <?php endif; ?>
     
-    
-    <?php
-        // Debug
-        //$this->load->library('core/query_minecraft', $this->server_settings);
-        //$players = $this->query_minecraft->get_players();
-        //$response = $this->rcon_minecraft->communicate('f list', FALSE);
-        //echo '<pre>';
-        //print_r($response);
-        //echo '</pre>';
-    ?>
-    
 </div>
 
 
-<!-- Player toplist -->
-<div id="content-toplist" class="hide">
-    
-    <h4 class="heading"><?php echo $this->config->item($this->module->active_service, 'submenu_names'); ?></h4>
-    
-    <?php 
-    
-    // If there is param like toplist and that param is set to TRUE
-    if(isset($this->module->services[$this->module->active_service]['toplist']) && $this->module->services[$this->module->active_service]['toplist'] == TRUE):
+<?php if($this->uri->segment(4) != 'error'): ?>
 
-        
-        if($this->module->active_service == 'amnesty' && $this->module->services['amnesty']['functionality'] == 'rcon')
-        {
-            // Get from rcon query
-            $data['players'] = $this->minecraft_lib->toplist_rcon_amnesty();
-        }
-        elseif($this->module->active_service == 'credits' && $this->module->services['credits']['functionality'] == 'rcon')
-        {
-            // Get from rcon query
-            $data['players'] = $this->minecraft_lib->toplist_rcon_credits();
-        }
-        else
-        {
-            // Get players from sql database
-            $data['players'] = $this->minecraft_model->{'toplist_'.$this->module->active_service}();
-        }
-        
-        if($data['players'] == FALSE)
-            $data['players'] = array();
-        
-        // Load toplist view
-        $this->load->view('top/top_'.$this->module->active_service, $data);
+    <!-- Player toplist -->
+    <div id="content-toplist" class="hide">
 
-    endif;
+        <h4 class="heading"><?php echo $this->config->item($this->module->active_service, 'submenu_names'); ?></h4>
+
+        <?php 
+
+        // If there is param like toplist and that param is set to TRUE
+        if(isset($this->module->services[$this->module->active_service]['toplist']) && $this->module->services[$this->module->active_service]['toplist'] == TRUE):
+
+
+            if($this->module->active_service == 'amnesty' && $this->module->services['amnesty']['functionality'] == 'rcon')
+            {
+                // Get from rcon query
+                $data['players'] = $this->minecraft_lib->toplist_rcon_amnesty();
+            }
+            elseif($this->module->active_service == 'credits' && $this->module->services['credits']['functionality'] == 'rcon')
+            {
+                // Get from rcon query
+                $data['players'] = $this->minecraft_lib->toplist_rcon_credits();
+            }
+            else
+            {
+                // Get players from sql database
+                $data['players'] = $this->minecraft_model->{'toplist_'.$this->module->active_service}();
+            }
+
+            if($data['players'] == FALSE)
+                $data['players'] = array();
+
+            // Load toplist view
+            $this->load->view('top/top_'.$this->module->active_service, $data);
+
+        endif;
+
+        ?>
+
+    </div>
     
-    ?>
-    
-</div>
+<?php endif; ?>
 
 
 <?php if($this->module->active_service == 'groups'): ?>

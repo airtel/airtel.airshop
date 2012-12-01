@@ -111,13 +111,16 @@
                                                     
                                                     if(isset($name['login']) && $name['login'] === TRUE):
                                                         
-                                                        if($this->{$this->module->active_module.'_lib'}->check_login(TRUE) == TRUE)
+                                                        if(class_exists($this->module->active_module.'_lib'))
                                                         {
-                                                            $settings = $this->config->item('services_settings');
-
-                                                            if($settings[$service]['login_required'] == TRUE && $state != 'selected')
+                                                            if($this->{$this->module->active_module.'_lib'}->check_login(TRUE) == TRUE)
                                                             {
-                                                                $style = 'style="color: #888;"';
+                                                                $settings = $this->config->item('services_settings');
+
+                                                                if($settings[$service]['login_required'] == TRUE && $state != 'selected')
+                                                                {
+                                                                    $style = 'style="color: #888;"';
+                                                                }
                                                             }
                                                         }
                                         

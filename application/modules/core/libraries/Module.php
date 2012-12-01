@@ -31,29 +31,28 @@ class Module
         $this->CI =& get_instance();
         
         // Load Base modules
-        $this->CI->load->module('base');
-        $this->CI->load->module('smscode');
-        $this->CI->load->module('ibankcode');
-        $this->CI->load->module('paypalcode');
+        $this->load_modules();
 
         // Debug
         //$this->CI->output->enable_profiler(TRUE);
         
-        // Geting active module from router
+        // Get active module from router
         $this->active_module = $this->CI->router->fetch_class();
         
-        // Loading module specific configs
-        $this->CI->load->config($this->active_module.'/master');
-        $this->CI->load->config($this->active_module.'/system');
-        $this->CI->load->config($this->active_module.'/priceplan');
+        // Get active service
+        $this->active_service = $this->CI->uri->rsegment(3);        
         
-        $this->CI->load->config($this->active_module.'/database');
+        // Load Error handler
+        $this->CI->load->library('core/error_handler');
+        
+        // Load ui library
+        $this->CI->load->library('core/ui');
+        
+        // Load active module configs
+        $this->load_configs();
         
         // Initializing loaded services
         $this->services = $this->CI->config->item($this->active_module.'_services');
-        
-        // Module and Service settings
-        $this->active_service = $this->CI->uri->rsegment(3);
         
         // SMS prices
         $this->sms_prices = $this->CI->smscode->get_prices('lv');
@@ -68,8 +67,6 @@ class Module
         $this->loaded_modules = $this->CI->config->item('base_modules');
         
         // Load core libraries
-        $this->CI->load->library('core/error_handler');
-        $this->CI->load->library('core/ui');
         $this->CI->load->library('core/system');
     }
 
@@ -79,11 +76,18 @@ class Module
      */
     public function db_init()
     {
-        // Module sql model loading
-        $this->CI->load->model($this->active_module.'/'.$this->active_module.'_model');
+        // Check connection settings before loading database
+        $this->db_check_connection();
         
-        // Core model loading
-        $this->CI->load->model('core/core_model');
+        // On error show we dont want extra code to be loaded
+        if($this->CI->uri->segment(4) != 'error')
+        {
+            // Module sql model loading
+            $this->CI->load->model($this->active_module.'/'.$this->active_module.'_model');
+            
+            // Core model loading
+            $this->CI->load->model('core/core_model');
+        }
     }
     
     
@@ -129,6 +133,94 @@ class Module
                 {
                     show_error('Access to disabled services is restricted !');
                 }
+            }
+        }
+    }
+    
+    
+    /**
+     * Checks for database connection
+     */
+    private function db_check_connection()
+    {
+        // Load basic db settings
+        if($this->active_module == 'war')
+        {
+            if($this->active_service == 'check_valid_exp_user' OR $this->active_service == 'check_ammo_user')
+            {
+                $active_service = array_shift(array_keys($this->services));
+                $settings = $this->CI->config->item($this->services[$active_service]['db_array_name']);
+            }
+            else
+            {
+                $settings = $this->CI->config->item($this->services[$this->active_service]['db_array_name']);
+            }
+        }
+        else
+        {
+            $settings = $this->CI->config->item($this->active_module);
+        }
+        
+        
+        // Workaround for IPB module
+        if($this->active_module == 'ipb')
+        {
+            $settings = $this->CI->ipb_db->get_ibp_settings();
+        }
+        
+        // Format DSN string from input
+        $dsn = $settings['dbdriver'].'://'.$settings['username'].':'.$settings['password'].'@'.$settings['hostname'];
+        
+        // Load database and dbutil
+        $this->CI->load->database($dsn, FALSE, TRUE);
+        $this->CI->load->dbutil();
+        
+        // Check connection details
+        if( ! $this->CI->dbutil->database_exists($settings['database']))
+        {
+            $this->CI->error_handler->show_error('error', 'Nav iespējams pieslēgties pie datubāzes.');
+        }
+        
+        //unset($this->db);
+        $this->CI->db->close();
+    }
+    
+    
+    /**
+     * Function loads base shop modules
+     */
+    public function load_modules()
+    {
+        $modules = array('base', 'smscode', 'ibankcode', 'paypalcode');
+        
+        foreach($modules as $module)
+        {
+            $this->CI->load->module($module);
+        }
+    }
+    
+    
+    /**
+     * Function loads active module configs
+     * Checks if each module config exists and loads it
+     * If config does not exist executes error handler function.
+     */
+    public function load_configs()
+    {
+        // Set needed configs for each module
+        $configs = array('master', 'database', 'priceplan', 'system');
+        
+        foreach($configs as $cfg)
+        {
+            if(file_exists(APPPATH . 'modules/'.$this->active_module.'/config/'.$cfg.'.php'))
+            {
+                $this->CI->load->config($this->active_module.'/'.$cfg);
+            }
+            else
+            {
+                $message = 'Moduļa konfigurācijas fails "'.$this->active_module.'/config/'.$cfg.'.php" nav atrasts! Iespējams ka šī ir jauna shop instalācija un tādā gadījumā ir javeic moduļa konfigurācijas faila pārsaukšana no '.$cfg.'.example.php uz '.$cfg.'.php';
+                log_message('error', $message);
+                show_error($message);
             }
         }
     }

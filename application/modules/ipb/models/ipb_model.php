@@ -23,10 +23,10 @@ class Ipb_model extends CI_Model {
         parent::__construct();
         
         // Get ipb settings
-        $this->settings = $this->ipb_lib->get_ibp_settings();        
+        $this->settings = $this->ipb_db->get_ibp_settings();        
         
         // Loading database from config
-        $this->load->database($this->settings);
+        $this->load->database($this->settings, FALSE, TRUE);
         
         // Private actions initialization
         $this->individual_init();

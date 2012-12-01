@@ -33,17 +33,22 @@ class Ipb extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Fix for ipb
-        $this->load->library('ipb/ipb_lib');
+        // Db functions
+        $this->load->library('ipb/ipb_db');
+        
+        // Module specific variables and functions initialization and execution
+        $this->module->module_init();
         
         // Init db models
         $this->module->db_init();
 
-        // Module specific variables and functions initialization and execution
-        $this->module->module_init();
-
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->load->library('ipb/ipb_lib');
+            
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -106,9 +111,12 @@ class Ipb extends MX_Controller {
         $data['fields'] = $this->config->item('fields_'.$this->module->active_service);
         
         // If there is info field, let's fill it with needed value
-        if(isset($data['fields']['username_info']))
+        if($this->uri->segment(4) != 'error')
         {
-            $data['fields']['username_info']['value'] = $this->ipb_member_data->name;
+            if(isset($data['fields']['username_info']))
+            {
+                $data['fields']['username_info']['value'] = $this->ipb_member_data->name;
+            }
         }
         
         

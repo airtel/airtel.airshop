@@ -34,13 +34,13 @@ class Muonline extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
-        // Private actions initialization
+        //
         $this->individual_init();
         
         // Validation options initialization
@@ -78,17 +78,21 @@ class Muonline extends MX_Controller {
         // Check login
         $this->muonline_lib->check_login(FALSE);
         
-        // Services table checking and setup
-        $this->core_model->check_table($this->muonline_model->sql_services_table, $this->muonline_model->table_structure, TRUE);
-        
-        // Clear expired players data
-        $this->muonline_model->clear_expired($this->muonline_model->sql_services_table);
-        
         // Set MU username
         $this->mu_username = $this->muonline_lib->get_username();
     
         // Set MU player data
-        $this->mu_player_data = array();
+        $this->mu_player_data = array();        
+        
+        // Private actions initialization
+        if($this->uri->segment(4) != 'error')
+        {
+            // Services table checking and setup
+            $this->core_model->check_table($this->muonline_model->sql_services_table, $this->muonline_model->table_structure, TRUE);
+
+            // Clear expired players data
+            $this->muonline_model->clear_expired($this->muonline_model->sql_services_table);
+        }
     }
     
     
@@ -332,14 +336,11 @@ class Muonline extends MX_Controller {
     
     public function login()
     {
-        $data['test'] = 'test';
-        
-        
         /**
          * Load HTML
          */
         $this->base->load_header($this->module->active_module);
-        $this->load->view($this->module->active_module.'_login_tpl', $data);
+        $this->load->view($this->module->active_module.'_login_tpl');
         $this->base->load_footer();        
     }
     

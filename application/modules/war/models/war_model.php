@@ -38,7 +38,7 @@ class War_model extends CI_Model {
         {
             $dbname = $this->module->services[$this->uri->segment(4)]['db_array_name'];
             
-            $this->$dbname = $this->load->database($this->config->item($dbname), TRUE);
+            $this->$dbname = $this->load->database($this->config->item($dbname), TRUE, TRUE);
         }
         
         

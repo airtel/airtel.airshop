@@ -23,7 +23,7 @@ class Cwservers_model extends CI_Model {
         parent::__construct();
         
         // Loading database from config
-        $this->load->database($this->config->item($this->module->active_module));
+        $this->load->database($this->config->item($this->module->active_module), FALSE, TRUE);
         
         // Load table structure
         $this->table_structure = $this->config->item($this->module->active_module.'_table_structure');

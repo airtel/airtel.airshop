@@ -25,14 +25,17 @@ class Cwservers extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -59,15 +62,13 @@ class Cwservers extends MX_Controller {
     {
         // Load CW lib
         $this->load->library('cwservers/cw');
-        
+
         // Do server ping check
         if($this->uri->segment(2) != 'check_status')
             $this->cw->ping_host($this->module->services[$this->module->active_service]['ssh'], TRUE);
-        
+
         // Services table checking and setup
         $this->core_model->check_table($this->cwservers_model->sql_services_table, $this->cwservers_model->table_structure, TRUE);
-        
-
     }
     
     
@@ -88,22 +89,24 @@ class Cwservers extends MX_Controller {
         // Get fields for module active service
         $data['fields'] = $this->config->item('fields_'.$this->module->active_service);
         
-        
-        // Prepare available servers array
-        $servers = $this->cwservers_model->get_available_servers($this->module->active_service);
-        
-        if(count($servers) > 0)
+        if($this->uri->segment(4) != 'error')
         {
-            foreach($this->cwservers_model->get_available_servers($this->module->active_service) as $server)
+            // Prepare available servers array
+            $servers = $this->cwservers_model->get_available_servers($this->module->active_service);
+        
+            if(count($servers) > 0)
             {
-                $data['fields']['servers']['data'][$server->id] = $server->server_hostname . ':' . $server->port;
+                foreach($this->cwservers_model->get_available_servers($this->module->active_service) as $server)
+                {
+                    $data['fields']['servers']['data'][$server->id] = $server->server_hostname . ':' . $server->port;
+                }
             }
+            else
+            {
+                $data['fields']['servers']['data'][''] = 'Nav brīvu serveru...';
+            }
+            
         }
-        else
-        {
-            $data['fields']['servers']['data'][''] = 'Nav brīvu serveru...';
-        }
-        
         
         /**
          * Lets begin work with inputs here:

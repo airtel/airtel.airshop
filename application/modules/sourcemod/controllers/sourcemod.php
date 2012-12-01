@@ -33,14 +33,17 @@ class Sourcemod extends MX_Controller {
         // Init library
         $this->load->library('core/module');
         
-        // Init db models
-        $this->module->db_init();
-        
         // Module specific variables and functions initialization and execution
         $this->module->module_init();
+        
+        // Init db models
+        $this->module->db_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -275,13 +278,14 @@ class Sourcemod extends MX_Controller {
                             $this->session->set_userdata('message', 'info{d}'.$username.' veiksmīgi iegādājās "'.ucfirst($this->module->active_service).'" pakalpojumu uz '.$goods_amount.' dienām!');
                             
                         }
-                    }
-                    
-                    // Reload privelegies
-                    if($this->config->item('reload_privelegies'))
-                    {
-                        $server = $this->sourcemod_model->get_server($server_id);
-                        $this->sourcemod_lib->reloadadmins($server->ip, $server->port, $server->rcon);
+                        
+                        // Reload privelegies
+                        if($this->config->item('reload_privelegies'))
+                        {
+                            $server = $this->sourcemod_model->get_server($server_id);
+                            $this->sourcemod_lib->reloadadmins($server->ip, $server->port, $server->rcon);
+                        }
+                        
                     }
                     
                     // Activate {pay_method} code

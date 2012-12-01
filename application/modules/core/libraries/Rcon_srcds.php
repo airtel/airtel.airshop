@@ -158,7 +158,7 @@ class Rcon_srcds {
         $result = $this->read_packet();
         
         
-        if($result[0]['CommandResponse'] != self::SERVERDATA_AUTH_RESPONSE)
+        if( ! isset($result[0]['CommandResponse']) OR $result[0]['CommandResponse'] != self::SERVERDATA_AUTH_RESPONSE)
         {
             //$this->__destruct();
             return FALSE;

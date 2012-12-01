@@ -34,15 +34,18 @@ class Minecraft extends MX_Controller {
         
         // Init library
         $this->load->library('core/module');
+
+        // Module specific variables and functions initialization and execution
+        $this->module->module_init();
         
         // Init db models
         $this->module->db_init();
-        
-        // Module specific variables and functions initialization and execution
-        $this->module->module_init();
 
         // Private actions initialization
-        $this->individual_init();
+        if($this->uri->segment(4) != 'error')
+        {
+            $this->individual_init();
+        }
         
         // Validation options initialization
         $this->validation_init();
@@ -119,14 +122,17 @@ class Minecraft extends MX_Controller {
         // Get fields for module active service
         $data['fields'] = $this->config->item('fields_'.$this->module->active_service);
         
-        
-        // Specific actions only for groups service
-        if($this->module->active_service == 'groups')
-        {
-            // Prepare groups array
-            $data['fields']['group']['data'] = $this->minecraft_lib->prepare_groups($this->priceplan_raw['sms']['groups']);
-        }
 
+        if($this->uri->segment(4) != 'error')
+        {
+            // Specific actions only for groups service
+            if($this->module->active_service == 'groups')
+            {
+                // Prepare groups array
+                $data['fields']['group']['data'] = $this->minecraft_lib->prepare_groups($this->priceplan_raw['sms']['groups']);
+            }
+        }
+        
         
         /**
          * Lets begin work with inputs here:
@@ -261,7 +267,17 @@ class Minecraft extends MX_Controller {
                             $command = $this->commands['peaceful'][$plugin]['command_set_pf'];
                             
                             // Set peaceful status
-                            $this->rcon_minecraft->communicate($command . ' ' . $this->input->post('faction'));
+                            $output = $this->rcon_minecraft->communicate($command . ' ' . $this->input->post('faction'));
+                            
+                            // Check server output
+                            if($this->_minecraft_faction_exists($output) == FALSE)
+                            {
+                                // Set error message
+                                $this->session->set_userdata('message', 'error{d}Ievādītā frakcija serverī neeksistē!');
+                                
+                                // Redirect
+                                redirect($this->module->active_module.'/index/'.$this->module->active_service);
+                            }
                             
                             if($this->server_settings['notifications'] == TRUE)
                             {
@@ -288,7 +304,17 @@ class Minecraft extends MX_Controller {
                         $command = $this->commands['power'][$plugin]['command_add_power'];
                         
                         // Add power
-                        $this->rcon_minecraft->communicate($command . ' ' . $this->input->post('username') . ' ' . $goods_amount);
+                        $output = $this->rcon_minecraft->communicate($command . ' ' . $this->input->post('username') . ' ' . $goods_amount);
+                        
+                        // Check server output
+                        if($this->_minecraft_faction_exists($output) == FALSE)
+                        {
+                            // Set error message
+                            $this->session->set_userdata('message', 'error{d}Ievādītā frakcija serverī neeksistē!');
+
+                            // Redirect
+                            redirect($this->module->active_module.'/index/'.$this->module->active_service);
+                        }
                         
                         // Send notification
                         if($this->server_settings['notifications'] == TRUE)
@@ -322,7 +348,7 @@ class Minecraft extends MX_Controller {
                         else
                         {
                             // Get active world
-                            $world = $this->module->services['groups']['world'];
+                            $world = $this->module->services['groups']['groups_world'];
                             
                             // Get active plugin
                             $plugin = $this->module->services['groups']['plugin'];
@@ -545,25 +571,24 @@ class Minecraft extends MX_Controller {
     
     
     /**
-     * Custom minecraft functions
-     * Check if faction exists
-     * @param type $username
+     * Checks factions plugin output
+     * If faction was not found return would be FALSE
+     * @param type $output
+     * @return boolean
      */
-    public function _minecraft_check_faction($faction)
+    public function _minecraft_faction_exists($output)
     {
-        $response = $this->rcon_minecraft->communicate('f list', FALSE);
-        $factions = explode("\n", $response);
-
-        foreach($factions as $f)
+        $output = explode("\n", $output);
+        
+        foreach($output as $o)
         {
-             if(stristr($f, $faction) !== FALSE)
-             {
-                 return TRUE;
-             }
+            if(stristr($o, 'could not be found') !== FALSE)
+            {
+                return FALSE;
+            }
         }
-
-        $this->form_validation->set_message('_minecraft_check_faction', 'Neesam atraduši frakciju ar šādu nosaukumu');
-        return FALSE;
+        
+        return TRUE;
     }
     
     

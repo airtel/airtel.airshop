@@ -23,26 +23,9 @@ class Wow_model extends CI_Model {
         parent::__construct();
         
         // Loading database from config
-        $this->load->database($this->config->item($this->module->active_module));
-        
-        // Load table structure
-        //$this->table_structure = $this->config->item($this->module->active_module.'_table_structure');
-        
-        // Private actions initialization
-        $this->individual_init();
+        $this->load->database($this->config->item($this->module->active_module), FALSE, TRUE);
     }
-    
-    
-    /**
-     * 
-     */
-    public function individual_init()
-    {
-        
-        //
-        
-    }
-    
+
     
     /**
      * 

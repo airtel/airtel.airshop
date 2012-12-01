@@ -154,7 +154,7 @@ $config['inline_login'] = FALSE;
  * Kādā veidā tiek glabātas paroles ieksh amx datubāzes
  * Available options: md5 / plain
  */
-$config['login_auth_type'] = 'md5';
+$config['login_auth_type'] = 'plain';
 
 
 /**

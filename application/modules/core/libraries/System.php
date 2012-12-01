@@ -64,7 +64,16 @@ class System
             foreach($service_pricelist as $key => $value)
             {
                 if($paymethod == 'sms')
-                    $source = $this->CI->module->sms_prices[$key];
+                {
+                    if(isset($this->CI->module->sms_prices[$key]))
+                    {
+                        $source = $this->CI->module->sms_prices[$key];
+                    }
+                    else 
+                    {
+                        $this->CI->error_handler->show_error('error', 'Modulis: <strong>"'.$this->CI->module->active_module.'"</strong>. Pakalpojuma <strong>"'.$this->CI->module->active_service.'"</strong> priceplan.php konfigurācijas fails satur nepareizu sms cenas kodu - <strong>"'.$key.'"</strong>. Lūdzu izlabojiet konfigurācijas failu.');
+                    }
+                }
 
                 elseif($paymethod == 'ibank' OR $paymethod == 'paypal')
                     $source = $key;

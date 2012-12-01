@@ -71,37 +71,6 @@ class Ipb_lib {
             return $do_redirect;
         }
     }        
-            
-    
-    
-    public function get_username()
-    {
-        
-    }
-    
-    
-    public function get_ibp_settings()
-    {
-        $settings = $this->CI->config->item('ipb');
-        $config_path = $this->CI->config->item('ipb_board_path') . 'conf_global.php';
-        
-        require_once($config_path);
-
-        $settings['hostname'] = $INFO['sql_host'];
-        $settings['username'] = $INFO['sql_user'];
-        $settings['password'] = $INFO['sql_pass'];
-        $settings['database'] = $INFO['sql_database'];
-        $settings['dbprefix'] = $INFO['sql_tbl_prefix'];
-        $settings['ipb_version'] = ( ! defined('IN_DEV')) ? '2' : '3';
-        $settings['id_column'] = ($settings['ipb_version'] == 3) ? 'member_id' : 'id';
-
-        return $settings;
-    }
-    
-    
-    /***********************************************************************************************
-     * IPB login functions
-     */
     
     
     /**
