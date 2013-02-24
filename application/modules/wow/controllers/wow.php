@@ -29,7 +29,8 @@ class Wow extends MX_Controller {
         $this->module->module_init();
         
         // Init db models
-        $this->module->db_init();
+        //$this->module->db_init();
+        $this->load->model('wow_model');
 
         // Private actions initialization
         if($this->uri->segment(4) != 'error')
@@ -159,6 +160,18 @@ class Wow extends MX_Controller {
                         
                     }
                     
+                    // Donate points
+                    elseif($this->module->active_service == 'donate_points')
+                    {
+                        
+                        // Add level
+                        $this->wow_model->add_donate_points($this->input->post('expression'), $goods_amount);
+                        
+                        // Set shop message
+                        $this->session->set_userdata('message', 'info{d}Lietotājam <strong>'.$this->input->post('expression').'</strong> tika piešķirts <strong> + ' . $goods_amount . '</strong> Donate points');
+                        
+                    }
+                    
                     
                     // Activate {pay_method} code
                     $this->{$pay_method.'code'}->code_response_wsearch($pay_code, $this->module->testing);
@@ -219,6 +232,20 @@ class Wow extends MX_Controller {
         if($this->core_model->search_valid_user($username, 'characters', 'name') == FALSE)
         {
             $this->form_validation->set_message('_wow_valid_user', 'Šāds lietotājs datubāzē nav atrasts');
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+    
+    
+    public function _wow_valid_web_user($username)
+    {
+        if($this->wow_model->search_valid_web_user($username) == FALSE)
+        {
+            $this->form_validation->set_message('_wow_valid_web_user', 'Šāds lietotājs datubāzē nav atrasts. Ielogojies vismaz vienu reizi web-portālā');
             return FALSE;
         }
         else

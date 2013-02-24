@@ -25,6 +25,32 @@
         }
         
     }, 'Šāds lietotājs datubāzē nav atrasts');
+    
+    
+    /**
+     * Valid username custom check
+     */
+    $.validator.addMethod('valid_web_user', function(value, element){
+
+        if(value.length > 2)
+        {
+            $.ajax({
+
+                url: '<?php echo site_url(); ?>/wow/wow_ajax_call/valid_web_user',
+                async: false,
+                global: false,
+                type: 'POST',
+                data: { user_input: value },
+                dataType: 'html',
+                success: function(output)
+                {
+                    response = ( output === 'TRUE' ) ? true : false;
+                }
+            });
+            return response;
+        }
+        
+    }, 'Šāds lietotājs datubāzē nav atrasts. Ielogojies vismaz vienu reizi web-portālā');
 
     
     /**

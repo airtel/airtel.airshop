@@ -21,6 +21,10 @@ $config['wow_services'] = array(
          */
         'toplist' => TRUE,
         
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'auth',
     ),
     
     'unban_character' => array(
@@ -35,6 +39,10 @@ $config['wow_services'] = array(
          */
         'toplist' => TRUE,
         
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'chars',
     ),
     
     'unban_ip' => array(
@@ -49,6 +57,10 @@ $config['wow_services'] = array(
          */
         'toplist' => TRUE,
         
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'auth',
     ),
     
     'gold' => array(
@@ -63,6 +75,28 @@ $config['wow_services'] = array(
          */
         'toplist' => TRUE,
         
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'chars',
+    ),
+    
+    'donate_points' => array(
+        
+        'title' => 'Buy donate points',
+        
+        'prices_display' => '%price %curr - %amount Dpoints',
+        
+        /**
+         * Spēlētāju tops
+         * TRUE / FALSE
+         */
+        'toplist' => FALSE,
+        
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'web',
     ),
     
     'exp' => array(
@@ -77,6 +111,10 @@ $config['wow_services'] = array(
          */
         'toplist' => TRUE,
         
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'chars',
     ),
     
     'levelup' => array(
@@ -95,6 +133,11 @@ $config['wow_services'] = array(
          * Serverī maksimālais spēlētāja līmenis
          */
         'max_level' => 80,
+        
+        /**
+         * Database where plugin tables are stored.
+         */
+        'db_array_name' => 'chars',
     ),
     
 );

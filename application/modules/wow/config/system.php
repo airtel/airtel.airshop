@@ -53,6 +53,10 @@ $config['services_settings'] = array(
         'login_required' => FALSE,
     ),
     
+    'donate_points' => array(
+        'login_required' => FALSE,
+    ),
+    
     'exp' => array(
         'login_required' => FALSE,
     ),
@@ -139,6 +143,27 @@ $config['fields_gold'] = array(
             'name' => 'character',
             'id' => 'character',
             'value' => set_value('character'),
+            'maxlength' => '30',
+            'minlength' => '2',
+        ),
+    ),  
+);
+
+
+$config['fields_donate_points'] = array(
+    
+    'expression' => array(
+        'label' => 'Account',
+        'type' => 'input',
+        'fill' => 'mandatory',
+        'wizard_step' => 1,
+        'ajax_validation' => 'required valid_web_user', //valid_web_user
+        //'php_validation' => 'required|xss_clean|max_length[30]|min_length[2]|callback__wow_valid_web_user',
+        'php_validation' => 'required|xss_clean|max_length[30]|min_length[2]|callback__wow_valid_web_user',
+        'options' => array(
+            'name' => 'expression',
+            'id' => 'expression',
+            'value' => set_value('expression'),
             'maxlength' => '30',
             'minlength' => '2',
         ),
