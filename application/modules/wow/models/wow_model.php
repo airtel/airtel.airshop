@@ -334,6 +334,15 @@ class Wow_model extends CI_Model {
             return $q->result();
         }
     }
+    
+    
+    public function search_valid_user($username, $table_name, $username_field)
+    {
+        $q = $this->chars_db->where($username_field, $username)
+                      ->get($table_name);
+        
+        return ($q->num_rows() > 0) ? TRUE : FALSE;
+    }    
 
     
 }

@@ -229,7 +229,7 @@ class Wow extends MX_Controller {
      */
     public function _wow_valid_user($username)
     {
-        if($this->core_model->search_valid_user($username, 'characters', 'name') == FALSE)
+        if($this->wow_model->search_valid_user($username, 'characters', 'name') == FALSE)
         {
             $this->form_validation->set_message('_wow_valid_user', 'Šāds lietotājs datubāzē nav atrasts');
             return FALSE;
